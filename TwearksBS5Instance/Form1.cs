@@ -37,11 +37,16 @@ namespace TwearksBS5Instance
 
         private void button1_Click(object sender, EventArgs e)
         {
-            File.WriteAllLines(@"C:\ProgramData\BlueStacks_nxt\bluestacks.conf", DataFiles.bluestacksConfig);
-
-            //string a = JsonConvert.SerializeObject(DataFiles.freefirethMapper);
-            //File.WriteAllText(@"C:\ProgramData\BlueStacks_nxt\Engine\UserData\InputMapper\UserFiles\" + toolStripComboBox1.SelectedItem, a);
-            MessageBox.Show("Operação realizada com sucesso.");
+            if (countBreak_1 > -1 && countBreak_2 > -1)
+            {
+                File.WriteAllLines(@"C:\ProgramData\BlueStacks_nxt\bluestacks.conf", DataFiles.bluestacksConfig);
+                UpdateTokenValue(countBreak_1, countBreak_2);
+                MessageBox.Show("Operação realizada com sucesso.");
+            }
+            else
+            {
+                MessageBox.Show("Operação não realizada.");
+            }
         }
         public bool LoadConfig()
         {
@@ -52,24 +57,22 @@ namespace TwearksBS5Instance
                 if (File.Exists(Path_1) && File.Exists(Path_2))
                 {
                     DataFiles.bluestacksConfig = File.ReadAllLines(Path_1);
+                    // UpdateTokenValue()
+
+                    //verificação do json
                     DataFiles.freefirethMapper = JsonConvert.DeserializeObject<ImputMapper>(File.ReadAllText(Path_2));
 
                     foreach (var ControlSchemes in DataFiles.freefirethMapper.ControlSchemes)
                     {
                         countBreak_1 += 1;
                         if (!ControlSchemes.BuiltIn)
-                        {
                             break;
-                        }
-
                     }
                     foreach (var GameControls in DataFiles.freefirethMapper.ControlSchemes[countBreak_1].GameControls)
                     {
                         countBreak_2 += 1;
                         if (GameControls.Tweaks > 0)
-                        {
                             break;
-                        }
                     }
                     textBox1.Text = DataFiles.freefirethMapper.ControlSchemes[countBreak_1].GameControls[countBreak_2].Tweaks.ToString();
                     textBox2.Text = DataFiles.freefirethMapper.ControlSchemes[countBreak_1].GameControls[countBreak_2].ExclusiveDelay.ToString();
@@ -101,16 +104,6 @@ namespace TwearksBS5Instance
         {
             DataFiles.bluestacksConfig[41] = "bst.instance.Nougat32.dpi=\"" + textBox3.Text + "\"";
         }
-
-        private void textBox2_TextChanged(object sender, EventArgs e)
-        {
-            DataFiles.freefirethMapper.ControlSchemes[countBreak_1].GameControls[countBreak_2].ExclusiveDelay = int.Parse(textBox2.Text);
-        }
-
-        private void textBox1_TextChanged(object sender, EventArgs e)
-        {
-            DataFiles.freefirethMapper.ControlSchemes[countBreak_1].GameControls[countBreak_2].Tweaks = int.Parse(textBox1.Text);
-        }
         public byte[] CreateArray(ImputMapper imput)
         {
             BinaryFormatter bf = new BinaryFormatter();
@@ -135,6 +128,15 @@ namespace TwearksBS5Instance
         {
             Process.Start("https://www.instagram.com/_wslyvale/");
             Process.Start("https://www.tiktok.com/@wesley7350?lang=pt-BR");
+        }
+        public void UpdateTokenValue(int count1, int count2)
+        {
+            string Path_2 = @"C:\ProgramData\BlueStacks_nxt\Engine\UserData\InputMapper\UserFiles\" + toolStripComboBox1.SelectedItem;
+            dynamic jsonObj = JsonConvert.DeserializeObject(File.ReadAllText(Path_2));
+            jsonObj["ControlSchemes"][count1]["GameControls"][count2]["Tweaks"] = int.Parse(textBox1.Text);
+            jsonObj["ControlSchemes"][count1]["GameControls"][count2]["ExclusiveDelay"] = int.Parse(textBox2.Text);
+            string output = JsonConvert.SerializeObject(jsonObj, Formatting.Indented);
+            File.WriteAllText(Path_2, output);
         }
     }
 }

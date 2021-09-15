@@ -53,12 +53,11 @@ namespace TwearksBS5Instance
             this.textBox1.Size = new System.Drawing.Size(127, 20);
             this.textBox1.TabIndex = 0;
             this.textBox1.Text = "0";
-            this.textBox1.TextChanged += new System.EventHandler(this.textBox1_TextChanged);
             // 
             // button1
             // 
             this.button1.Enabled = false;
-            this.button1.Location = new System.Drawing.Point(60, 201);
+            this.button1.Location = new System.Drawing.Point(61, 201);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(75, 23);
             this.button1.TabIndex = 1;
@@ -106,7 +105,6 @@ namespace TwearksBS5Instance
             this.textBox2.Size = new System.Drawing.Size(127, 20);
             this.textBox2.TabIndex = 6;
             this.textBox2.Text = "0";
-            this.textBox2.TextChanged += new System.EventHandler(this.textBox2_TextChanged);
             // 
             // label3
             // 
