@@ -5,12 +5,12 @@ using System.Runtime.InteropServices;
 // As informações gerais sobre um assembly são controladas por
 // conjunto de atributos. Altere estes valores de atributo para modificar as informações
 // associadas a um assembly.
-[assembly: AssemblyTitle("TwearksBS5Instance")]
+[assembly: AssemblyTitle("TweaksBS5")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("TwearksBS5Instance")]
-[assembly: AssemblyCopyright("Copyright ©  2021")]
+[assembly: AssemblyProduct("TweaksBS5")]
+[assembly: AssemblyCopyright("Copyright ©  2021 (WESLEY)")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
